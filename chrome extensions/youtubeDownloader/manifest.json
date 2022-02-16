@@ -1,0 +1,34 @@
+{
+    "name": "Youtube Video Downloader by Deepeshdg",
+    "version": "0.0.1",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*",
+                "https://yt5s.com/*"
+            ],
+            "css": [],
+            "js": [
+                "/index.js",
+                "/youtube.js",
+                "/yt5s.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "logo-128x128.jpg"
+        }
+    },
+    "icons": {
+        "128": "logo-128x128.jpg"
+    },
+    "permissions":[
+        "tabs"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ]
+}
