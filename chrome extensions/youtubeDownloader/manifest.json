@@ -1,5 +1,5 @@
 {
-    "name": "Youtube Video Downloader by Deepeshdg",
+    "name": "Offline Youtube",
     "version": "0.0.1",
     "manifest_version": 3,
     "content_scripts": [
@@ -10,20 +10,20 @@
             ],
             "css": [],
             "js": [
-                "/index.js",
-                "/youtube.js",
-                "/yt5s.js"
+                "/scripts/index.js",
+                "/scripts/youtube.js",
+                "/scripts/yt5s.js"
             ]
         }
     ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "128": "logo-128x128.jpg"
+            "128": "/images/logo-128x128.jpg"
         }
     },
     "icons": {
-        "128": "logo-128x128.jpg"
+        "128": "/images/logo-128x128.jpg"
     },
     "permissions":[
         "tabs"
