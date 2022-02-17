@@ -12,7 +12,7 @@ async function youtubeMusic () {
         await myObserver( 'ytmusic-player-bar .middle-controls.style-scope.ytmusic-player-bar' , musicPlayer => {
             const downloadBtn = makeDownloadButton(document.createElement('a'), {
                 id : `download-youtube-music-btn-dg`,
-                href : `https://yt5s.com/en56?q=${encodeURI(setVideoUrl(window.location.href))}`,
+                href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
             });
             musicPlayer.appendChild(downloadBtn);
             btnCreated = true;

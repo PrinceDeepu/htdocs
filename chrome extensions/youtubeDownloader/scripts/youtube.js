@@ -53,7 +53,7 @@ async function youtube () {
             const downloadBtn = makeDownloadButton(document.createElement('a'), {
                 height: document.querySelector('tp-yt-paper-button').height,
                 id : `download-youtube-video-btn-dg`,
-                href : `https://yt5s.com/en56?q=${encodeURI(setVideoUrl(window.location.href))}`,
+                href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
             });
             
             subscribeBtn.appendChild(downloadBtn);
