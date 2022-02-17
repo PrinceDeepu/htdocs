@@ -54,6 +54,7 @@ async function youtube () {
             const height = document.querySelector('tp-yt-paper-button').height;
             const link = window.location.href;
             downloadBtn.id = `download-youtube-video-btn-dg`;
+            downloadBtn.rel = `noopener noreferrer`;
             downloadBtn.href = `https://yt5s.com/en56?q=${encodeURI(link)}`;
             downloadBtn.target = "_blank";
             downloadBtn.textContent = "DOWNLOAD";
@@ -67,8 +68,8 @@ async function youtube () {
             outline: none;
             cursor: pointer;
             transition: 0.4s all;
-            background-color: green;
-            color: white;
+            background-color: ${primary};
+            color: ${primaryColor};
             font-size: 14px;
             text-decoration: none;
             height: ${height};

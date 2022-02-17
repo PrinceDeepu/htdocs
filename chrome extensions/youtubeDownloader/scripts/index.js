@@ -1,3 +1,6 @@
+const primary = 'green';
+const primaryColor = 'white';
+
 function myObserver( node, callback ) {
     return new Promise( ( resolve, reject ) => {
         let observe = setInterval( () => {

@@ -1,34 +1,32 @@
 {
-    "name": "Offline Youtube",
+    "name": "Test",
     "version": "0.0.1",
     "manifest_version": 3,
     "content_scripts": [
         {
             "matches": [
-                "https://www.youtube.com/*",
-                "https://yt5s.com/*"
+                "https://web.classplusapp.com/*"
             ],
             "css": [],
             "js": [
-                "/scripts/index.js",
-                "/scripts/youtube.js",
-                "/scripts/yt5s.js"
+                "/scripts/aspire.js"
             ]
         }
     ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "128": "/images/logo-128x128.jpg"
+            "128": "images/logo-128x128.png"
         }
     },
     "icons": {
-        "128": "/images/logo-128x128.jpg"
+        "128": "images/logo-128x128.png"
     },
     "permissions":[
-        "tabs"
+        "tabs",
+        "storage"
     ],
     "host_permissions": [
         "<all_urls>"
     ]
-}
+} 
