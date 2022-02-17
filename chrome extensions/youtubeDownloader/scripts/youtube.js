@@ -41,50 +41,31 @@
 
 docReady( youtube);
 
-let btnCreated = false;
+let youtubeDownloadBtnCreated = false;
 async function youtube () {
     // let found = false;
-    if(btnCreated) {
+    if(youtubeDownloadBtnCreated) {
         removeMyBtn();
-        btnCreated = false;
+        youtubeDownloadBtnCreated = false;
     }
     if(window.location.host == 'www.youtube.com' && window.location.pathname == '/watch') {
         await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
-            const downloadBtn = document.createElement('a');
-            const height = document.querySelector('tp-yt-paper-button').height;
-            const link = window.location.href;
-            downloadBtn.id = `download-youtube-video-btn-dg`;
-            downloadBtn.rel = `noopener noreferrer`;
-            downloadBtn.href = `https://yt5s.com/en56?q=${encodeURI(link)}`;
-            downloadBtn.target = "_blank";
-            downloadBtn.textContent = "DOWNLOAD";
-            
-            downloadBtn.style.cssText = `
-            padding: 0px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 0px;
-            outline: none;
-            cursor: pointer;
-            transition: 0.4s all;
-            background-color: ${primary};
-            color: ${primaryColor};
-            font-size: 14px;
-            text-decoration: none;
-            height: ${height};
-            `;
+            const downloadBtn = makeDownloadButton(document.createElement('a'), {
+                height: document.querySelector('tp-yt-paper-button').height,
+                id : `download-youtube-video-btn-dg`,
+                href : `https://yt5s.com/en56?q=${encodeURI(setVideoUrl(window.location.href))}`,
+            });
             
             subscribeBtn.appendChild(downloadBtn);
-            btnCreated = true;
+            youtubeDownloadBtnCreated = true;
         });
     } else {
-        if(btnCreated) {
+        if(youtubeDownloadBtnCreated) {
             removeMyBtn();
-            btnCreated = false;
+            youtubeDownloadBtnCreated = false;
         }
     }
-    observeHref();
+    observeHref('youtube');
     
     function removeMyBtn() {
         document.querySelector('#download-youtube-video-btn-dg').remove();

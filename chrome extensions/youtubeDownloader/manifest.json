@@ -6,13 +6,15 @@
         {
             "matches": [
                 "https://www.youtube.com/*",
-                "https://yt5s.com/*"
+                "https://yt5s.com/*",
+                "https://music.youtube.com/*"
             ],
             "css": [],
             "js": [
                 "/scripts/index.js",
                 "/scripts/youtube.js",
-                "/scripts/yt5s.js"
+                "/scripts/yt5s.js",
+                "/scripts/youtubeMusic.js"
             ]
         }
     ],
