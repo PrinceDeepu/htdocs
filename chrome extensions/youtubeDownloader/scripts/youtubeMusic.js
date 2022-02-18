@@ -1,31 +1,30 @@
 
 docReady( youtubeMusic);
 
-let btnCreated = false;
+let youtubeMusicDownloadBtnCreated = false;
 async function youtubeMusic () {
-    // let found = false;
-    if(btnCreated) {
-        removeMyBtn();
-        btnCreated = false;
-    }
-    if(window.location.host == 'music.youtube.com' && window.location.pathname == '/watch') {
+    removeMyBtn();
+
+    const youtubeMusicDownloadBtnId = `download-youtube-music-btn-dg`;
+    if(window.location.host.indexOf('music.youtube.com') !== -1 && window.location.pathname.indexOf('/watch') !== -1) {
         await myObserver( 'ytmusic-player-bar .middle-controls.style-scope.ytmusic-player-bar' , musicPlayer => {
-            const downloadBtn = makeDownloadButton(document.createElement('a'), {
-                id : `download-youtube-music-btn-dg`,
+            const downloadBtn = makeDownloadButton({
+                id : youtubeMusicDownloadBtnId,
                 href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
             });
             musicPlayer.appendChild(downloadBtn);
-            btnCreated = true;
+            youtubeMusicDownloadBtnCreated = true;
         });
     } else {
-        if(btnCreated) {
-            removeMyBtn();
-            btnCreated = false;
-        }
+        removeMyBtn();
     }
     observeHref('youtubeMusic');
-    
+        
     function removeMyBtn() {
-        document.querySelector('#download-youtube-music-btn-dg').remove();
+        if(youtubeMusicDownloadBtnCreated) {
+            if(document.querySelector(`#${youtubeMusicDownloadBtnId}`))
+                document.querySelector(`#${youtubeMusicDownloadBtnId}`).remove();
+            youtubeMusicDownloadBtnCreated = false;
+        }
     }
 }

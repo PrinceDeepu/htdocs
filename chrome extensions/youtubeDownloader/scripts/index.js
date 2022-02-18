@@ -44,17 +44,17 @@ function setVideoUrl(url) {
     return url;
 }
 
-function makeDownloadButton(buttonElement, options) {
-    const height = options.height ?? null;
-
+function makeDownloadButton(options) {
+    const buttonElement = document.createElement('a');
+    
+    const additionalcss = options.additionalcss ?? '';
     buttonElement.id = options.id ?? '';
     buttonElement.rel = options.rel ?? `noopener noreferrer`;
     buttonElement.href = options.href ?? "#";
     buttonElement.target = options.target ?? `_blank`;
     buttonElement.textContent = options.buttonText ?? `DOWNLOAD`;
     buttonElement.style.cssText = `
-        ${height !== null ? 'height: '+height : ''}
-        padding: ${height !== null ? '0px' : '10px'} 15px;
+        padding: 10px 15px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -66,7 +66,7 @@ function makeDownloadButton(buttonElement, options) {
         color: ${primaryColor};
         font-size: 14px;
         text-decoration: none;
-        height: ${height};
+        ${additionalcss}
     `;
 
     return buttonElement;

@@ -42,32 +42,49 @@
 docReady( youtube);
 
 let youtubeDownloadBtnCreated = false;
-async function youtube () {
-    // let found = false;
-    if(youtubeDownloadBtnCreated) {
-        removeMyBtn();
-        youtubeDownloadBtnCreated = false;
-    }
-    if(window.location.host == 'www.youtube.com' && window.location.pathname == '/watch') {
-        await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
-            const downloadBtn = makeDownloadButton(document.createElement('a'), {
-                height: document.querySelector('tp-yt-paper-button').height,
-                id : `download-youtube-video-btn-dg`,
-                href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+let youtubePlaylistDownloadBtnCreated = false;
+async function youtube() {
+    const youtubeDownloadBtnId = `download-youtube-video-btn-dg`;
+    const youtubePlaylistDownloadBtnId = `download-youtube-video-btn-dg`;
+    removeMyBtn();
+
+    if(window.location.host.indexOf('youtube.com') !== -1) {
+        if(window.location.pathname.indexOf('/watch') !== -1) {
+            await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
+                const downloadBtn = makeDownloadButton({
+                    id : youtubeDownloadBtnId,
+                    href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+                });
+                
+                subscribeBtn.appendChild(downloadBtn);
+                youtubeDownloadBtnCreated = true;
             });
-            
-            subscribeBtn.appendChild(downloadBtn);
-            youtubeDownloadBtnCreated = true;
-        });
-    } else {
-        if(youtubeDownloadBtnCreated) {
+        } else if(window.location.pathname.indexOf('playlist') !== -1) {
+            await myObserver( '#owner-container' , playlistMenu => {
+                const downloadBtn = makeDownloadButton({
+                    id : youtubePlaylistDownloadBtnId,
+                    href : `https://youtubemultidownloader.net/playlists.html?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+                });
+                
+                playlistMenu.after(downloadBtn);
+                youtubePlaylistDownloadBtnCreated = true;
+            });
+        } else {
             removeMyBtn();
-            youtubeDownloadBtnCreated = false;
         }
     }
     observeHref('youtube');
     
     function removeMyBtn() {
-        document.querySelector('#download-youtube-video-btn-dg').remove();
+        if(youtubeDownloadBtnCreated) {
+            if(document.querySelector(`#${youtubeDownloadBtnId}`) !== undefined)
+                document.querySelector(`#${youtubeDownloadBtnId}`).remove();
+            youtubeDownloadBtnCreated = false;
+        }
+        if(youtubePlaylistDownloadBtnCreated) {
+            if(document.querySelector(`#${youtubePlaylistDownloadBtnId}`) !== undefined) 
+                document.querySelector(`#${youtubePlaylistDownloadBtnId}`).remove();
+            youtubePlaylistDownloadBtnCreated = false;
+        }
     }
 }

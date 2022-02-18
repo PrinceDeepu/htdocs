@@ -1,20 +1,22 @@
 {
     "name": "Offline Youtube",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "manifest_version": 3,
     "content_scripts": [
         {
             "matches": [
                 "https://www.youtube.com/*",
                 "https://yt5s.com/*",
-                "https://music.youtube.com/*"
+                "https://music.youtube.com/*",
+                "https://youtubemultidownloader.net/*"
             ],
             "css": [],
             "js": [
                 "/scripts/index.js",
                 "/scripts/youtube.js",
                 "/scripts/yt5s.js",
-                "/scripts/youtubeMusic.js"
+                "/scripts/youtubeMusic.js",
+                "/scripts/youtubeMultiDownloader.js"
             ]
         }
     ],
