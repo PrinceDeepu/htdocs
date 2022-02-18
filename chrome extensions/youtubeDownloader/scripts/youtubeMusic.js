@@ -3,9 +3,8 @@ docReady( youtubeMusic);
 
 let youtubeMusicDownloadBtnCreated = false;
 async function youtubeMusic () {
-    removeMyBtn();
-
     const youtubeMusicDownloadBtnId = `download-youtube-music-btn-dg`;
+    removeMyBtn();
     if(window.location.host.indexOf('music.youtube.com') !== -1 && window.location.pathname.indexOf('/watch') !== -1) {
         await myObserver( 'ytmusic-player-bar .middle-controls.style-scope.ytmusic-player-bar' , musicPlayer => {
             const downloadBtn = makeDownloadButton({
