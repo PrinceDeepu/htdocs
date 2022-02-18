@@ -41,52 +41,50 @@
 
 docReady( youtube);
 
-let btnCreated = false;
-async function youtube () {
-    // let found = false;
-    if(btnCreated) {
-        removeMyBtn();
-        btnCreated = false;
-    }
-    if(window.location.host == 'www.youtube.com' && window.location.pathname == '/watch') {
-        await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
-            const downloadBtn = document.createElement('a');
-            const height = document.querySelector('tp-yt-paper-button').height;
-            const link = window.location.href;
-            downloadBtn.id = `download-youtube-video-btn-dg`;
-            downloadBtn.rel = `noopener noreferrer`;
-            downloadBtn.href = `https://yt5s.com/en56?q=${encodeURI(link)}`;
-            downloadBtn.target = "_blank";
-            downloadBtn.textContent = "DOWNLOAD";
-            
-            downloadBtn.style.cssText = `
-            padding: 0px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 0px;
-            outline: none;
-            cursor: pointer;
-            transition: 0.4s all;
-            background-color: ${primary};
-            color: ${primaryColor};
-            font-size: 14px;
-            text-decoration: none;
-            height: ${height};
-            `;
-            
-            subscribeBtn.appendChild(downloadBtn);
-            btnCreated = true;
-        });
-    } else {
-        if(btnCreated) {
+let youtubeDownloadBtnCreated = false;
+let youtubePlaylistDownloadBtnCreated = false;
+async function youtube() {
+    const youtubeDownloadBtnId = `download-youtube-video-btn-dg`;
+    const youtubePlaylistDownloadBtnId = `download-youtube-video-btn-dg`;
+    removeMyBtn();
+
+    if(window.location.host.indexOf('youtube.com') !== -1) {
+        if(window.location.pathname.indexOf('/watch') !== -1) {
+            await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
+                const downloadBtn = makeDownloadButton({
+                    id : youtubeDownloadBtnId,
+                    href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+                });
+                
+                subscribeBtn.appendChild(downloadBtn);
+                youtubeDownloadBtnCreated = true;
+            });
+        } else if(window.location.pathname.indexOf('playlist') !== -1) {
+            await myObserver( '#owner-container' , playlistMenu => {
+                const downloadBtn = makeDownloadButton({
+                    id : youtubePlaylistDownloadBtnId,
+                    href : `https://youtubemultidownloader.net/playlists.html?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+                });
+                
+                playlistMenu.after(downloadBtn);
+                youtubePlaylistDownloadBtnCreated = true;
+            });
+        } else {
             removeMyBtn();
-            btnCreated = false;
         }
     }
-    observeHref();
+    observeHref('youtube');
     
     function removeMyBtn() {
-        document.querySelector('#download-youtube-video-btn-dg').remove();
+        if(youtubeDownloadBtnCreated) {
+            if(document.querySelector(`#${youtubeDownloadBtnId}`) !== undefined)
+                document.querySelector(`#${youtubeDownloadBtnId}`).remove();
+            youtubeDownloadBtnCreated = false;
+        }
+        if(youtubePlaylistDownloadBtnCreated) {
+            if(document.querySelector(`#${youtubePlaylistDownloadBtnId}`) !== undefined) 
+                document.querySelector(`#${youtubePlaylistDownloadBtnId}`).remove();
+            youtubePlaylistDownloadBtnCreated = false;
+        }
     }
 }
