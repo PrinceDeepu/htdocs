@@ -30,22 +30,20 @@ async function youtubeMultiDownloader() {
 
                         await myObserver('#ListVideo', table => {
                             let downloadBtns = document.querySelectorAll('#ListVideo a[download]');
-                            let remainingVideo = downloadBtns.length;
+                            let totalVideo = downloadBtns.length;
                             let start = 0;
-                            if(remainingVideo > 0 && start < remainingVideo) {
+                            if( start < totalVideo ) {
                                 let btn = downloadBtns[start];
                                 window.open(btn.href, "_blank");
 
                                 start++;
-                                remainingVideo--;
                             }
                             const downloadInterval = setInterval( () => {
-                                if(remainingVideo > 0 && start < remainingVideo) {
+                                if( start < totalVideo ) {
                                     let btn = downloadBtns[start];
                                     window.open(btn.href, "_blank");
 
                                     start++;
-                                    remainingVideo--;
                                 } else
                                     clearInterval(downloadInterval);
                             }, 30000);
