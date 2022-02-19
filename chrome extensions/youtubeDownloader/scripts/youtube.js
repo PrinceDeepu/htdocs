@@ -49,9 +49,18 @@ async function youtube() {
     removeMyBtn();
 
     if(window.location.host.indexOf('youtube.com') !== -1) {
-        if(window.location.pathname.indexOf('/watch') !== -1 || 
-            window.location.pathname.indexOf('/shorts') !== -1 ) {
+        if(window.location.pathname.indexOf('/watch') !== -1 ) {
             await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
+                const downloadBtn = makeDownloadButton({
+                    id : youtubeDownloadBtnId,
+                    href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
+                });
+                
+                subscribeBtn.appendChild(downloadBtn);
+                youtubeDownloadBtnCreated = true;
+            });
+        } else if(window.location.pathname.indexOf('/shorts') !== -1 ) {
+            await myObserver( '#navigation-button-down' , subscribeBtn => {
                 const downloadBtn = makeDownloadButton({
                     id : youtubeDownloadBtnId,
                     href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
