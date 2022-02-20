@@ -16,9 +16,10 @@ async function youtubeMultiDownloader() {
                 });
 
                 downloadAllObj.btnId = 'downloadAll';
+                downloadAllObj.service = null;
                 downloadAllObj.btnContainer = '#lbStatus';
                 downloadAllObj.btnContainerNode = 'parentElement';
-                downloadAllObj.traverseNode = 'parent'
+                downloadAllObj.traverseNode = 'parent';
                 downloadAllObj.addLocation = 'after';
                 downloadAllObj.btnText = 'Download All';
                 downloadAllObj.target = '_self';

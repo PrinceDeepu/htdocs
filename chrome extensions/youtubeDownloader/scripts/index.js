@@ -42,9 +42,11 @@ class OfflineYoutube {
     }
 
     makeUrl() {
-        let url = `https://yt5s.com/en56?utmSource=${this.utmSource}&downloadType=${this.downloadType}&q=${encodeURI(this.setUrl())}`;
+        let url = '#';
 
-        if( this.service === 'youtubeMultiDownloader' )
+        if(this.service === 'yt5s')
+            url = `https://yt5s.com/en56?utmSource=${this.utmSource}&downloadType=${this.downloadType}&q=${encodeURI(this.setUrl())}`;
+        else if( this.service === 'youtubeMultiDownloader' )
             url = `https://youtubemultidownloader.net/playlists.html?utmSource=${this.utmSource}&downloadType=${this.downloadType}&q=${encodeURI(this.setUrl())}`;
 
         return url;
