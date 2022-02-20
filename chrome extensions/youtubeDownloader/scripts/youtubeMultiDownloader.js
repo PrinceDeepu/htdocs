@@ -1,5 +1,5 @@
 
-docReady(youtubeMultiDownloader)
+const downloadAllObj = new OfflineYoutube();
 
 async function youtubeMultiDownloader() {
     if(window.location.host.indexOf("youtubemultidownloader.net") !== -1) {
@@ -7,7 +7,7 @@ async function youtubeMultiDownloader() {
         if(window.location.pathname.indexOf("playlists.html") !== -1) {
 
             const url = new URL(window.location.href);
-            if(url.searchParams.get('redirectType') === 'deepeshdg') {
+            if(url.searchParams.get('utmSource') === 'deepeshdg') {
 
                 await myObserver('#cbQuality', SelectElement => SelectElement.selectedIndex = 0 );
                 await myObserver('input#inputPlaylist', inputElement => {
@@ -15,45 +15,45 @@ async function youtubeMultiDownloader() {
                     inputElement.dispatchEvent(new Event('input', {bubbles:true}));
                 });
 
-                await myObserver( '#lbStatus' , downloadBtnContainer => {
-                    const downloadBtn = makeDownloadButton({
-                        id : 'downloadAll',
-                        buttonText : ' Download All',
-                        additionalcss : 'margin-top: 10px; border-radius: 4px;',
-                        target: '_self',
-                    });
-                    
-                    downloadBtnContainer.parentElement.after(downloadBtn);
-                    
-                    downloadBtn.addEventListener('click', async event => {
-                        event.preventDefault();
+                downloadAllObj.btnId = 'downloadAll';
+                downloadAllObj.service = null;
+                downloadAllObj.btnContainer = '#lbStatus';
+                downloadAllObj.btnContainerNode = 'parentElement';
+                downloadAllObj.traverseNode = 'parent';
+                downloadAllObj.addLocation = 'after';
+                downloadAllObj.btnText = 'Download All';
+                downloadAllObj.target = '_self';
+                downloadAllObj.additionalcss = 'margin-top: 10px; border-radius: 4px;';
 
-                        await myObserver('#ListVideo', table => {
-                            let downloadBtns = document.querySelectorAll('#ListVideo a[download]');
-                            let totalVideo = downloadBtns.length;
-                            let start = 0;
+                downloadAllObj.make();
+
+                downloadAllObj.buttonElement.addEventListener('click', async event => {
+                    event.preventDefault();
+
+                    await myObserver('#ListVideo', table => {
+                        let downloadBtns = document.querySelectorAll('#ListVideo a[download]');
+                        let totalVideo = downloadBtns.length;
+                        let start = 0;
+                        if( start < totalVideo ) {
+                            let btn = downloadBtns[start];
+                            window.open(btn.href, "_blank");
+
+                            start++;
+                        }
+                        const downloadInterval = setInterval( () => {
                             if( start < totalVideo ) {
                                 let btn = downloadBtns[start];
                                 window.open(btn.href, "_blank");
 
                                 start++;
-                            }
-                            const downloadInterval = setInterval( () => {
-                                if( start < totalVideo ) {
-                                    let btn = downloadBtns[start];
-                                    window.open(btn.href, "_blank");
-
-                                    start++;
-                                } else
-                                    clearInterval(downloadInterval);
-                            }, 30000);
-                        });
+                            } else
+                                clearInterval(downloadInterval);
+                        }, 30000);
                     });
                 });
-
-                // await myObserver('#btn-action', node => node.click() );
-                // await myObserver('#asuccess:not(.hidden)', node => node.click() );
             }
         }
     }
 }
+
+docReady(youtubeMultiDownloader)

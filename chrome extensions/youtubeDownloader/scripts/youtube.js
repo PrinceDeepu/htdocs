@@ -1,100 +1,40 @@
-// const ajaxRequest = ( options = null, ytUrl = 'https://www.youtube.com/watch?v=hu8MHIBeG4M' ) => {
-//     if(options === null || options === undefined) {
-//         options = {
-//             url : "https://yt5s.com/api/ajaxSearch",
-//             type: "POST",
-//             data: {
-//                 q: ytUrl,
-//                 vt: 'home',
-//             },
-//         };
-//     }
 
-//     options.formData = [];
-//     for (const name in options.data ) {
-//         if ( Object.hasOwnProperty.call( options.data, name ) ) {
-//             options.formData.push( encodeURIComponent( name ) + "=" + encodeURIComponent(options.data[name]));
-            
-//         }
-//     }
-//     options.formData = options.formData.join( '&' ).replace( /%20/g, '+' );
-    
-//     const xhttp = new XMLHttpRequest();
+const youtubeVideoObj = new OfflineYoutube();
+const youtubePlaylistObj = new OfflineYoutube();
 
-//     xhttp.addEventListener( 'error', function(event) {
-//         alert( 'Oops! Something went wrong.' );
-//     } );
-
-//     xhttp.addEventListener( 'load', function(event) {
-//         alert('success');
-//         console.log(this.responseText);
-//     } );
-
-//     xhttp.open(options.type, options.url);
-//     xhttp.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8' );
-//     xhttp.setRequestHeader( 'origin', 'https://yt5s.com' );
-//     xhttp.setRequestHeader( 'Referer', 'https://yt5s.com' );
-//     xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
-//     xhttp.setRequestHeader( 'accept', '*/*' );
-//     xhttp.send(options.formData);
-// }
-
-docReady( youtube);
-
-let youtubeDownloadBtnCreated = false;
-let youtubePlaylistDownloadBtnCreated = false;
 async function youtube() {
-    const youtubeDownloadBtnId = `download-youtube-video-btn-dg`;
-    const youtubePlaylistDownloadBtnId = `download-youtube-video-btn-dg`;
-    removeMyBtn();
+    youtubeVideoObj.btnId = `download-youtube-video-btn-dg`;
+    youtubePlaylistObj.btnId = `download-youtube-playlist-btn-dg`;
+
+    youtubeVideoObj.removeButton();
+    youtubePlaylistObj.removeButton();
 
     if(window.location.host.indexOf('youtube.com') !== -1) {
-        if(window.location.pathname.indexOf('/watch') !== -1 ) {
-            await myObserver( 'ytd-subscribe-button-renderer' , subscribeBtn => {
-                const downloadBtn = makeDownloadButton({
-                    id : youtubeDownloadBtnId,
-                    href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
-                });
-                
-                subscribeBtn.appendChild(downloadBtn);
-                youtubeDownloadBtnCreated = true;
-            });
-        } else if(window.location.pathname.indexOf('/shorts') !== -1 ) {
-            await myObserver( '#navigation-button-down' , subscribeBtn => {
-                const downloadBtn = makeDownloadButton({
-                    id : youtubeDownloadBtnId,
-                    href : `https://yt5s.com/en56?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
-                });
-                
-                subscribeBtn.appendChild(downloadBtn);
-                youtubeDownloadBtnCreated = true;
-            });
+
+        if(window.location.pathname.indexOf('watch') !== -1 ) {
+            youtubeVideoObj.btnContainer = 'ytd-subscribe-button-renderer';
+            youtubeVideoObj.btnUrl = window.location.href;
+
+            await youtubeVideoObj.make();
+
+        } else if(window.location.pathname.indexOf('short') !== -1 ) {
+            youtubeVideoObj.btnContainer = '#navigation-button-down';
+            youtubeVideoObj.btnUrl = window.location.href;
+
+            await youtubeVideoObj.make();
+
         } else if(window.location.pathname.indexOf('playlist') !== -1) {
-            await myObserver( '#owner-container' , playlistMenu => {
-                const downloadBtn = makeDownloadButton({
-                    id : youtubePlaylistDownloadBtnId,
-                    href : `https://youtubemultidownloader.net/playlists.html?redirectType=deepeshdg&q=${encodeURI(setVideoUrl(window.location.href))}`,
-                });
-                
-                playlistMenu.after(downloadBtn);
-                youtubePlaylistDownloadBtnCreated = true;
-            });
-        } else {
-            removeMyBtn();
+            youtubePlaylistObj.btnContainer = '#owner-container';
+            youtubePlaylistObj.btnUrl = window.location.href;
+            youtubePlaylistObj.service = 'youtubeMultiDownloader';
+            youtubePlaylistObj.addLocation = 'after';
+
+            await youtubePlaylistObj.make();
+
         }
     }
     observeHref('youtube');
-    
-    function removeMyBtn() {
-        if(youtubeDownloadBtnCreated) {
-            if(document.querySelector(`#${youtubeDownloadBtnId}`) !== undefined)
-                document.querySelector(`#${youtubeDownloadBtnId}`).remove();
-            youtubeDownloadBtnCreated = false;
-        }
-        if(youtubePlaylistDownloadBtnCreated) {
-            if(document.querySelector(`#${youtubePlaylistDownloadBtnId}`) !== undefined) 
-                document.querySelector(`#${youtubePlaylistDownloadBtnId}`).remove();
-            youtubePlaylistDownloadBtnCreated = false;
-        }
-    }
+
 }
+
+docReady( youtube);
