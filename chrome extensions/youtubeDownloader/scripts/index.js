@@ -41,6 +41,18 @@ class OfflineYoutube {
         });
     }
 
+    makeNew() {
+        return new Promise( async (resolve, reject) => {
+            await myObserver( this.btnContainer, btnContainer => {
+                this.makeNewDownloadButton(btnContainer);
+
+                this.btnCreated = true;
+                resolve(true);
+            });
+            reject(false);
+        });
+    }
+
     makeUrl() {
         let url = '#';
 
@@ -50,6 +62,15 @@ class OfflineYoutube {
             url = `https://youtubemultidownloader.net/playlists.html?utmSource=${this.utmSource}&downloadType=${this.downloadType}&q=${encodeURI(this.setUrl())}`;
 
         return url;
+    }
+
+    makeNewDownloadButton(btnElement) {
+        btnElement.removeAttribute('is-hidden');
+        const downloadBtn = btnElement.children[0];
+        downloadBtn.id = this.btnId;
+        downloadBtn.href = this.makeUrl();
+        downloadBtn.target = this.btnTarget;
+        this.buttonElement = btnElement;
     }
 
     makeDownloadButton() {
@@ -79,6 +100,13 @@ class OfflineYoutube {
         if( this.btnCreated && document.querySelector(`#${this.btnId}`) !== undefined )
             document.querySelector(`#${this.btnId}`).remove();
         this.btnCreated = false;
+    }
+
+    removeNewButton(){
+        if(this.btnCreated) {
+            const att = document.createAttribute('is-hidden');
+            this.buttonElement.setAttributeNode(att);
+        }
     }
 
     setUrl(url = this.btnUrl) {

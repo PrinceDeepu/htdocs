@@ -6,16 +6,16 @@ async function youtube() {
     youtubeVideoObj.btnId = `download-youtube-video-btn-dg`;
     youtubePlaylistObj.btnId = `download-youtube-playlist-btn-dg`;
 
-    youtubeVideoObj.removeButton();
+    youtubeVideoObj.removeNewButton();
     youtubePlaylistObj.removeButton();
 
     if(window.location.host.indexOf('youtube.com') !== -1) {
 
         if(window.location.pathname.indexOf('watch') !== -1 ) {
-            youtubeVideoObj.btnContainer = 'ytd-subscribe-button-renderer';
+            youtubeVideoObj.btnContainer = 'ytd-download-button-renderer';
             youtubeVideoObj.btnUrl = window.location.href;
 
-            await youtubeVideoObj.make();
+            await youtubeVideoObj.makeNew();
 
         } else if(window.location.pathname.indexOf('short') !== -1 ) {
             youtubeVideoObj.btnContainer = '#navigation-button-down';
