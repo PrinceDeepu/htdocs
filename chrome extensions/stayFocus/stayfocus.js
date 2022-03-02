@@ -6,7 +6,7 @@ const blockedSites = [
 function block() {
     const overlay = `
         <div style="display: flex; width: 100%; height: 100vh; justify-content: center; align-items: center; z-index: 9999999999999">
-            <img src="https://res.cloudinary.com/deepeshgupta/image/upload/v1645547501/images/Bhai-kya-kar-raha-hai-tu_zepmnd.jpg" alt="Kya Kar Raha Hai Bhai Tu" style="max-width: 100%; height: auto" />
+            <img src="https://res.cloudinary.com/deepeshgupta/image/upload/v1646238532/images/study-hard_v5aooz.jpg" alt="Kya Kar Raha Hai Bhai Tu" style="max-width: 100%; height: auto" />
         </div>
     `;
     blockedSites.forEach(site => {
