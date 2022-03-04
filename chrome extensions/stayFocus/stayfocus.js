@@ -1,5 +1,5 @@
 const blockedSites = [
-    "shorts",
+    "youtube.com/short",
     "instagram"
 ];
 
