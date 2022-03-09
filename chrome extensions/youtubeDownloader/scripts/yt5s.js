@@ -5,12 +5,18 @@ async function yt5s() {
         const url = new URL(window.location.href);
         if(url.searchParams.get('utmSource') === 'deepeshdg') {
 
+            let interval = setInterval( async () => {
+                await myObserver("#search-form button", node => node.click() )
+            }, 300000);
+
             await myObserver('#formatSelect', node => {
 
                 if(url.searchParams.get("downloadType") === 'audio') 
                     node.selectedIndex = node.options.length - 1;
                 else
-                    node.selectedIndex = 0; 
+                    node.selectedIndex = 0;
+                
+                clearInterval(interval);
             });
 
             await myObserver('#btn-action', node => node.click() );
