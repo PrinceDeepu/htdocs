@@ -1,4 +1,3 @@
-
 const youtubeVideoObj = new OfflineYoutube();
 const youtubePlaylistObj = new OfflineYoutube();
 
@@ -9,32 +8,27 @@ async function youtube() {
     youtubeVideoObj.removeNewButton();
     youtubePlaylistObj.removeButton();
 
-    if(window.location.host.indexOf('youtube.com') !== -1) {
-
-        if(window.location.pathname.indexOf('watch') !== -1 ) {
-            youtubeVideoObj.btnContainer = 'ytd-download-button-renderer';
+    if (window.location.host.indexOf("youtube.com") !== -1) {
+        if (window.location.pathname.indexOf("watch") !== -1) {
+            youtubeVideoObj.btnContainer = "ytd-download-button-renderer";
             youtubeVideoObj.btnUrl = window.location.href;
 
             await youtubeVideoObj.makeNew();
-
-        } else if(window.location.pathname.indexOf('short') !== -1 ) {
-            youtubeVideoObj.btnContainer = '#navigation-button-down';
+        } else if (window.location.pathname.indexOf("short") !== -1) {
+            youtubeVideoObj.btnContainer = "#navigation-button-down";
             youtubeVideoObj.btnUrl = window.location.href;
 
             await youtubeVideoObj.make();
-
-        } else if(window.location.pathname.indexOf('playlist') !== -1) {
-            youtubePlaylistObj.btnContainer = '#owner-container';
+        } else if (window.location.pathname.indexOf("playlist") !== -1) {
+            youtubePlaylistObj.btnContainer = "#owner-container";
             youtubePlaylistObj.btnUrl = window.location.href;
-            youtubePlaylistObj.service = 'youtubeMultiDownloader';
-            youtubePlaylistObj.addLocation = 'after';
+            youtubePlaylistObj.service = "youtubeMultiDownloader";
+            youtubePlaylistObj.addLocation = "after";
 
             await youtubePlaylistObj.make();
-
         }
     }
-    observeHref('youtube');
-
+    observeHref("youtube");
 }
 
-docReady( youtube);
+docReady(youtube);
