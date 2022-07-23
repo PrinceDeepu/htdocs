@@ -175,7 +175,23 @@ class OfflineYoutube {
     }
 }
 
-function myObserver(node, callback) {
+class OfflineYoutubeIframe extends OfflineYoutube {
+    iframeContainer;
+
+    make() {
+        return new Promise(async (resolve, reject) => {
+            await myObserver(this.btnContainer, (btnContainer) => {
+                this.makeIframe();
+            });
+
+            reject(false);
+        });
+    }
+
+    makeIframe() {}
+}
+
+function myObserver(node, callback = (node) => {}) {
     return new Promise((resolve, reject) => {
         let observe = setInterval(() => {
             const selectedNode = document.querySelector(node);
